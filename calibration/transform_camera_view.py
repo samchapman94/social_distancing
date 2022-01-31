@@ -13,13 +13,23 @@ class TransformCameraView:
         self.top_view_points = None
         self.transformation_matrix = None
         self.transformed_image = None
+        self.data = {}
+        self.boxsize = 20
 
     def mark_points_on_camera_view_image(self, num_points):
         mark_points = MarkPoints(self.camera_image, "Camera View")
         self.camera_view_points = mark_points.mark_points(num_points)
 
     def mark_points_on_top_view(self, num_points):
-        mark_points = MarkPoints(self.top_view, "Top View")
+        #mark_points = MarkPoints(self.top_view, "Top View")
+        #bit of a gross way of doing it but works
+        
+        center_point = self.top_view_size[0]/2
+        self.data['points'].append([center_point+self.boxsize,center_point+self.boxsize])
+        self.data['points'].append([center_point-self.boxsize,center_point+self.boxsize])
+        self.data['points'].append([center_point-self.boxsize,center_point-self.boxsize])
+        self.data['points'].append([center_point+self.boxsize,center_point-self.boxsize])
+        mark_points = np.vstack(self.data['points']).astype(float)
         self.top_view_points = mark_points.mark_points(num_points)
 
     def calculate_transformation(self):
