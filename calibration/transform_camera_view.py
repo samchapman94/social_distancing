@@ -40,7 +40,7 @@ class TransformCameraView:
     def generate_transformed_image(self):
         self.transformed_image = cv2.warpPerspective(self.camera_image, self.transformation_matrix,
                                                      self.top_view_size[0:2])
-
+                                                     
     def display_camera_image_on_top_view(self):
         cv2.imshow("Transformed Image", self.transformed_image)
         cv2.waitKey(0)

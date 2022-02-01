@@ -11,7 +11,7 @@ class ScaleFactorEstimator:
         self.top_view_points = []
         self.scale_factor = None
 
-    def mark_points(self, num_points):
+    def mark_points(self, num_points, calibration_points):
         mark_points = MarkPoints(self.camera_image, "Camera View")
         camera_points = mark_points.mark_points(num_points)
         self.camera_view_points.append(camera_points)
@@ -21,7 +21,8 @@ class ScaleFactorEstimator:
             points = np.matmul(self.transformation_metrics, cam_points)
             points = points[:2]
             top_view_points.append(points)
-        self.top_view_points.append(top_view_points)
+#        self.top_view_points.append(top_view_points)
+        self.top_view_points = calibration_points[:,0]
 
     def estimate_scale_factor(self, person_height_ft=6):
         pixel_ditances = []

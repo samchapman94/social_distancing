@@ -19,10 +19,10 @@ def transform_camera_view(image, no_points):
     return transformer
 
 
-def calculate_scale_factor(image, transformation_matrix, no_points, iterations):
+def calculate_scale_factor(image, transformation_matrix, no_points, iterations, calibration_points):
     scale_factor_estimator = ScaleFactorEstimator(image, transformation_matrix)
     for i in range(iterations):
-        scale_factor_estimator.mark_points(no_points)
+        scale_factor_estimator.mark_points(no_points, calibration_points)
 
     return scale_factor_estimator.estimate_scale_factor()
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     video.release()
     # Estimate the camera view to bird eye view transformation and scale factor
     cal_obj = transform_camera_view(frame, num_points)
-    scale_factor = calculate_scale_factor(frame, cal_obj.transformation_matrix, 2, num_iterations)
+    scale_factor = calculate_scale_factor(frame, cal_obj.transformation_matrix, 2, num_iterations, cal_obj)
     # Save the transformation matrix and scale factor as pkl file
     pkl_file_path = config.cfg["calibration"]["pkl_file_path"]
     with open(pkl_file_path, 'wb') as f:
