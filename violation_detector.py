@@ -65,12 +65,16 @@ def main():
             break
         # Get the person detections
         detections = person_detector.do_inference(frame, 0.5, 0.45)
-        # Find out the mid-bottom point of each detection
+        # Find out the mid-bottom point of each detection and transform into the correct plane 
         det_points = {}
         for i, det in enumerate(detections):
             x, y, w, h, _ = det
-            det_points[i] = np.array([int(x + w / 2), int(y + h)])
+            points = np.array([int(x + w / 2), int(y + h)])
+            points = np.append(points, 1)
+            points = np.matmul(transformation_matrix, points) 
+            det_points[i] = points[:2]
         # Calculate the distance between bounding boxes
+
         distances = np.array([[0 for i in range(len(det_points))] for j in range(len(det_points))])
         for i in det_points.keys():
             p1 = det_points[i]

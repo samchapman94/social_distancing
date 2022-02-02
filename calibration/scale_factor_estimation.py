@@ -22,7 +22,7 @@ class ScaleFactorEstimator:
             points = points[:2]
             top_view_points.append(points)
 #        self.top_view_points.append(top_view_points)
-        self.top_view_points = calibration_points[:,0]
+        self.top_view_points = calibration_points[:,0] #must check this is in the format [x,y]
 
     def estimate_scale_factor(self, person_height_ft=6):
         pixel_ditances = []
