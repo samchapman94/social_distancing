@@ -15,7 +15,6 @@ def transform_camera_view(image, no_points):
     transformer.generate_transformed_image()
     transformer.display_camera_image_on_top_view()
     cv2.destroyAllWindows()
-
     return transformer
 
 

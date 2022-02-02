@@ -45,6 +45,7 @@ The program then takes the average of all such pairs and estimate the scale fact
 1. Create and activate a new conda environment using commands 
     ```
     $ conda create --name social_distancing python=3.8
+    
     $ conda activate social_distancing 
                         OR 
     $ source activate social_distancing
